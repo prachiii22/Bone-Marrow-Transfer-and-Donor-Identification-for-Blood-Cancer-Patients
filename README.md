@@ -1,1 +1,2 @@
 # Bone-Marrow-Transfer-and-Donor-Identification-for-Blood-Cancer-Patients
+This project aims to provide a comprehensive solution for managing bone marrow transplant compatibility and identifying suitable donors for blood cancer patients. The project will be a mobile application that integrates a Django-based backend for managing data, a machine learning model for donor compatibility prediction, and a frontend developed using HTML, CSS, and JavaScript. The project will also include a blood cancer database to store patient and donor details.
