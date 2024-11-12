@@ -5,3 +5,8 @@ The system has two main modules:
 1. Bone Marrow Transfer Compatibility Matching: Using machine learning algorithms (such as KNN), the system predicts whether a donor's bone marrow is compatible with a patient.
 2. Donor Identification: The system helps identify suitable bone marrow donors for blood cancer patients based on attributes like age, blood type, and genetic data.
 This project is designed to improve the process of finding compatible donors and ensuring safe bone marrow transplants for blood cancer patients.
+
+Technologies Used
+Backend: Django (Python), Django REST Framework
+Machine Learning: Scikit-learn (KNN algorithm)
+Frontend: React Native, HTML, CSS, JavaScript
