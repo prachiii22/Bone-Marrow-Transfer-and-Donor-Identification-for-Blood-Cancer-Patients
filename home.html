@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bone Marrow Transfer Home</title>
+    <link rel="stylesheet" href="home.css">
+    <script src="{% static 'path/to/minor.js' %}"></script>
+</head>
+<body>
+    <div class="navbar">
+        <button class="nav-btn" onclick="openModal('addPatientModal')">Add Patient</button>
+        <button class="nav-btn" onclick="openModal('addDonorModal')">Add Donor</button>
+        <button class="nav-btn" onclick="openModal('predictModal')">Predict Compatibility</button>
+    </div>
+
+    <div class="container">
+        <h1>Welcome to Bone Marrow Transfer and Donor Identification</h1>
+        <p>This application helps in identifying suitable donors for blood cancer patients based on compatibility predictions. Click the buttons above to add patients, donors, or check compatibility.</p>
+    </div>
+
+    <!-- Add Patient Modal -->
+    <div id="addPatientModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addPatientModal')">&times;</span>
+            <h2>Add Patient</h2>
+            <form id="addPatientForm" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required><br>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select><br>
+
+                <label for="blood_type">Blood Type:</label>
+                <input type="text" id="blood_type" name="blood_type" required><br>
+
+                <label for="diagnosis_date">Diagnosis Date:</label>
+                <input type="date" id="diagnosis_date" name="diagnosis_date" required><br>
+
+                <label for="cancer_type">Cancer Type:</label>
+                <input type="text" id="cancer_type" name="cancer_type" required><br>
+
+                <label for="treatment_history">Treatment History:</label>
+                <textarea id="treatment_history" name="treatment_history" rows="4" cols="50"></textarea><br>
+
+                <label for="current_treatment">Current Treatment:</label>
+                <input type="text" id="current_treatment" name="current_treatment"><br>
+
+                <label for="hla_typing">HLA Typing:</label>
+                <input type="text" id="hla_typing" name="hla_typing" required><br>
+
+                <label for="contact_info">Contact Information:</label>
+                <input type="text" id="contact_info" name="contact_info" required><br>
+
+                <button type="submit">Add Patient</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Donor Modal -->
+    <div id="addDonorModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addDonorModal')">&times;</span>
+            <h2>Add Donor</h2>
+            <form id="addDonorForm" method="POST">
+                <label for="donor_name">Name:</label>
+                <input type="text" id="donor_name" name="name" required><br>
+
+                <label for="donor_age">Age:</label>
+                <input type="number" id="donor_age" name="age" required><br>
+
+                <label for="donor_gender">Gender:</label>
+                <select id="donor_gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select><br>
+
+                <label for="donor_blood_type">Blood Type:</label>
+                <input type="text" id="donor_blood_type" name="blood_type" required><br>
+
+                <label for="donor_hla_typing">HLA Typing:</label>
+                <input type="text" id="donor_hla_typing" name="hla_typing" required><br>
+
+                <label for="health_status">Health Status:</label>
+                <input type="text" id="health_status" name="health_status"><br>
+
+                <label for="contact_info">Contact Information:</label>
+                <input type="text" id="contact_info" name="contact_info" required><br>
+
+                <label for="availability_for_donation">Availability for Donation:</label>
+                <select id="availability_for_donation" name="availability_for_donation" required>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select><br>
+
+                <button type="submit">Add Donor</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Predict Compatibility Modal -->
+    <div id="predictModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('predictModal')">&times;</span>
+            <h2>Predict Compatibility</h2>
+            <form id="predictForm" method="POST">
+                <label for="predict_age">Age:</label>
+                <input type="number" id="predict_age" name="age" required><br>
+
+                <label for="predict_blood_type">Blood Type:</label>
+                <input type="text" id="predict_blood_type" name="blood_type" required><br>
+
+                <label for="predict_hla_typing">HLA Typing:</label>
+                <input type="text" id="predict_hla_typing" name="hla_typing" required><br>
+
+                <button type="submit">Check Compatibility</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName("modal");
+            for (let modal of modals) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        };
+
+        // Handle form submissions via fetch API
+        document.getElementById('addPatientForm').onsubmit = function(event) {
+            event.preventDefault();
+            const data = new FormData(event.target);
+            fetch('/add_patient/', {
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(data)),
+                headers: { 'Content-Type': 'application/json' }
+            }).then(response => response.json()).then(data => {
+                alert(data.message || 'Patient added successfully');
+                closeModal('addPatientModal');
+            });
+        };
+
+        document.getElementById('addDonorForm').onsubmit = function(event) {
+            event.preventDefault();
+            const data = new FormData(event.target);
+            fetch('/add_donor/', {
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(data)),
+                headers: { 'Content-Type': 'application/json' }
+            }).then(response => response.json()).then(data => {
+                alert(data.message || 'Donor added successfully');
+                closeModal('addDonorModal');
+            });
+        };
+
+        document.getElementById('predictForm').onsubmit = function(event) {
+            event.preventDefault();
+            const data = new FormData(event.target);
+            fetch('/predict_compatibility/', {
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(data)),
+                headers: { 'Content-Type': 'application/json' }
+            }).then(response => response.json()).then(data => {
+                alert(data.success ? 'Compatible' : 'Not compatible');
+                closeModal('predictModal');
+            });
+        };
+    </script>
+</body>
+</html>
