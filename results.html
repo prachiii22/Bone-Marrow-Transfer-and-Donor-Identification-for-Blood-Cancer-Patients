@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bone Marrow Transfer - Compatibility Result</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="navbar">
+        <button class="nav-btn" onclick="openModal('addPatientModal')">Add Patient</button>
+        <button class="nav-btn" onclick="openModal('addDonorModal')">Add Donor</button>
+        <button class="nav-btn" onclick="openModal('predictModal')">Predict Compatibility</button>
+    </div>
+
+    <div class="container">
+        <h1>Compatibility Prediction Result</h1>
+        <p><strong>Compatibility Status:</strong> {{ message }}</p>
+
+        {% if details %}
+            <h2>Details:</h2>
+            <ul>
+                {% for key, value in details.items %}
+                    <li><strong>{{ key }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if patient %}
+            <h2>Patient Details:</h2>
+            <p><strong>Name:</strong> {{ patient.name }}</p>
+            <p><strong>Age:</strong> {{ patient.age }}</p>
+            <p><strong>Blood Type:</strong> {{ patient.blood_type }}</p>
+            <p><strong>HLA Typing:</strong> {{ patient.hla_typing }}</p>
+        {% endif %}
+
+        {% if donor %}
+            <h2>Donor Details:</h2>
+            <p><strong>Name:</strong> {{ donor.name }}</p>
+            <p><strong>Age:</strong> {{ donor.age }}</p>
+            <p><strong>Blood Type:</strong> {{ donor.blood_type }}</p>
+            <p><strong>HLA Typing:</strong> {{ donor.hla_typing }}</p>
+        {% endif %}
+
+        <a href="{% url 'home' %}">Go Back Home</a>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName("modal");
+            for (let modal of modals) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        };
+    </script>
+</body>
+</html>
