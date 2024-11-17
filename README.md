@@ -7,6 +7,6 @@ The system has two main modules:
 This project is designed to improve the process of finding compatible donors and ensuring safe bone marrow transplants for blood cancer patients.
 
 Technologies Used
-1. Backend: Django (Python), Django REST Framework
+1. Backend: Django (Python)
 2. Machine Learning: Scikit-learn (KNN algorithm)
 3. Frontend: React Native, HTML, CSS, JavaScript
