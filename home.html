@@ -20,7 +20,7 @@
     </div>
 
     <div class="copyright">
-        <p>© Prachi . All rights reserved. 2024</p>
+        <p>© Prachi & team. All rights reserved. 2024</p>
     </div>
 
     <!-- Add Patient Modal -->
@@ -29,7 +29,7 @@
             <span class="close" onclick="closeModal('addPatientModal')">&times;</span>
             <h2>Add Patient</h2>
             <form id="addPatientForm" method="POST" action="{% url 'add_patient' %}">
-                
+            
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required><br>
 
@@ -75,7 +75,7 @@
             <span class="close" onclick="closeModal('addDonorModal')">&times;</span>
             <h2>Add Donor</h2>
             <form id="addDonorForm" method="POST" action="{% url 'add_donor' %}">
-                
+            
                 <label for="donor_name">Name:</label>
                 <input type="text" id="donor_name" name="name" required><br>
 
@@ -117,21 +117,53 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal('predictModal')">&times;</span>
             <h2>Predict Compatibility</h2>
-            <form id="predictForm" method="POST" action="{% url 'predict_compatibility' %}">
+            <form id="predictForm" method="POST" action="{% url 'predict' %}">
                 
                 <label for="predict_age">Age:</label>
                 <input type="number" id="predict_age" name="age" required><br>
-
+                
                 <label for="predict_blood_type">Blood Type:</label>
                 <input type="text" id="predict_blood_type" name="blood_type" required><br>
-
+                
                 <label for="predict_hla_typing">HLA Typing:</label>
                 <input type="text" id="predict_hla_typing" name="hla_typing" required><br>
-
+                
                 <button type="submit">Check Compatibility</button>
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('predictForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('{% url "predict" %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.text().then(html => {
+                        document.open();
+                        document.write(html);
+                        document.close();
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing your request.');
+            });
+        });
+    </script>
 
     <script>
         function openModal(modalId) {
