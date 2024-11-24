@@ -12,9 +12,6 @@ class Patient(models.Model):
     hla_typing = models.CharField(max_length=100)
     contact_info = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.name
-
 class Donor(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
@@ -24,6 +21,3 @@ class Donor(models.Model):
     health_status = models.CharField(max_length=200, blank=True)
     contact_info = models.CharField(max_length=200)
     availability_for_donation = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
