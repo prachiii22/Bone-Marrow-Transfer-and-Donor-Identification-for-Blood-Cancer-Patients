@@ -20,8 +20,6 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
-from django.urls import path
-from .views import AddPatientView, AddDonorView, PredictCompatibilityView
 
 from django.urls import path
 from . import views
@@ -32,4 +30,5 @@ urlpatterns = [
     path('add_patient/', views.add_patient, name='add_patient'),
     path('add_donor/', views.add_donor, name='add_donor'),
     path('predict/', views.predict_compatibility, name='predict'),
+    path('result/', views.result_page, name='result'),
 ]
