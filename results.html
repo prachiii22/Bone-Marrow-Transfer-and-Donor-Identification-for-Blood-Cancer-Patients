@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bone Marrow Transfer - Compatibility Result</title>
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="results.css">
 </head>
 <body>
     <div class="navbar">
@@ -14,8 +14,9 @@
     </div>
 
     <div class="container">
+        <img src="blood_drop.jpg" alt="Blood Drop" class="icon">
         <h1>Compatibility Prediction Result</h1>
-        <p><strong>Compatibility Status:</strong> {{ message }}</p>
+        <p><strong>Compatibility Status:</strong> {% if message %}{{ message }}{% else %}No Result{% endif %}</p>
 
         {% if details %}
             <h2>Details:</h2>
@@ -32,6 +33,8 @@
             <p><strong>Age:</strong> {{ patient.age }}</p>
             <p><strong>Blood Type:</strong> {{ patient.blood_type }}</p>
             <p><strong>HLA Typing:</strong> {{ patient.hla_typing }}</p>
+        {% else %}
+            <p>No patient details available.</p>
         {% endif %}
 
         {% if donor %}
@@ -40,6 +43,8 @@
             <p><strong>Age:</strong> {{ donor.age }}</p>
             <p><strong>Blood Type:</strong> {{ donor.blood_type }}</p>
             <p><strong>HLA Typing:</strong> {{ donor.hla_typing }}</p>
+        {% else %}
+            <p>No donor details available.</p>
         {% endif %}
 
         <a href="{% url 'home' %}">Go Back Home</a>
